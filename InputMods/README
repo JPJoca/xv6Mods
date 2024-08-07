@@ -1,0 +1,19 @@
+In this assignment, the goal is to modify the xv6 system to support changing the text and background colors for further typing. The implemented functionalities include:
+
+Displaying and hiding the color selection menu: The user can display the color selection table with the key combination <ALT> and C, and hide it with the same combination.
+
+Navigating through the menu and selecting an item: The user navigates through the table using the w (up) and s (down) keys.
+
+Choosing text and background colors on the screen: After exiting the table, the selected color combination is applied for future inputs.
+
+Displaying and hiding the table: The table is dynamically displayed one row above and one column to the right or left of the current cursor position, depending on the available space.
+
+The table contains four color combinations:
+
+WHT BLK (white text on a black background)
+PUR WHT (purple text on a white background)
+RED AQU (red text on an aqua background)
+WHT YEL (white text on a yellow background)
+The table is displayed with black text on a white background, while the currently selected item is marked with black text on a green background. When the menu is first opened, the initial selection is the first row. Upon closing the menu, the last selected item is remembered and shown as selected when the menu is reopened.
+
+While the table is displayed, the terminal does not respond to other inputs except for the keys used to navigate through the table. After closing the table, the terminal restores the display to what it was before the table was shown and applies the selected color combination for future inputs.

@@ -1,0 +1,37 @@
+In this assignment, the goal is to extend the xv6 system to support the following filesystem functionalities:
+
+Handling large files: Modify the inode structure to support double indirect pointers, allowing files to consist of 11 + 128 + 128*128 blocks.
+
+File content encryption: Implement encryption using the Caesar cipher, with the key set via the setkey system call.
+
+In addition to these functionalities, the following system calls and user programs have been implemented:
+
+System Calls:
+int setkey(int key): Sets the global key for encryption/decryption.
+int setecho(int echo): Enables/disables echo functionality on the console.
+int encr(int fd): Encrypts an open file using the global key.
+int decr(int fd): Decrypts an open file using the global key.
+User Programs:
+setkey: Sets the key for encryption/decryption.
+encr: Encrypts one or more files.
+decr: Decrypts one or more files.
+blockwriter: Creates a new file of a specified size (in blocks) with predictable content.
+Detailed Functionalities:
+Double Indirect Node
+Inode Structure: Modified to support double indirect pointers, allowing the handling of large files.
+Research and Testing: Ensured that the filesystem functions correctly in all scenarios after the changes.
+Encryption and Decryption
+Caesar Cipher: Used for file content encryption/decryption.
+Global Key: Set via the setkey call and used for all files.
+Read/Write Modifications: The read and write system calls are modified to automatically decrypt/encrypt during reading/writing.
+System Calls
+setecho(int do_echo): Controls console echo functionality.
+setkey(int key): Sets the global key for encryption/decryption.
+encr(int fd): Encrypts an open file using the global key.
+decr(int fd): Decrypts an open file using the global key.
+User Programs
+setkey: Program to set the key, supporting input via command line or STDIN.
+encr: Program to encrypt files.
+decr: Program to decrypt files.
+blockwriter: Program to create large files with predictable content, with options for filename and number of blocks.
+This assignment encompasses all the steps necessary to extend the functionalities of the xv6 system, including modifying the inode structure, implementing encryption and decryption, and adding new system calls and user programs.
