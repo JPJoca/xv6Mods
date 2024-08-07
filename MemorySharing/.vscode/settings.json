@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "defs.h": "c",
+        "mmu.h": "c",
+        "x86.h": "c",
+        "typeinfo": "c"
+    }
+}

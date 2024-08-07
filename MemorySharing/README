@@ -1,0 +1,56 @@
+
+This assignment, the goal is to modify the xv6 system to support memory sharing between processes, specifically between parent and child processes. The parent process should register a shared memory area with the operating system, and any immediate child processes can access this shared memory area in their address space. Additionally, several user programs that utilize these system changes are to be implemented.
+
+Key Requirements:
+Preserve System Functionality: Ensure that processes can start and terminate normally, and that all allocated memory is properly freed. Be mindful of who should free the memory.
+
+System Calls: Implement two new system calls: share_data and get_data.
+
+Process Modifications: Make changes to the fork() and process termination functions.
+
+System Calls:
+1. int share_data(char *name, void *addr, int size);
+Called by the parent process to register a shared structure.
+The shared structure includes a unique string name (up to 10 characters), a pointer to the shared memory, and the size of the memory.
+Up to 10 shared structures can be stored in the process structure.
+Returns the index of the shared structure within the process (0-9) on success, or an error code:
+-1: Invalid parameter.
+-2: Shared structure with the same name already exists.
+-3: Maximum number of shared structures reached.
+2. int get_data(char *name, void **addr);
+Called by the child process to access a shared structure registered by the parent.
+The first parameter is the name of the shared structure, and the second is a pointer to the shared memory.
+Returns 0 on success, or an error code:
+-1: Invalid parameter.
+-2: Shared structure with the given name does not exist.
+System Modifications:
+1. fork() Modifications:
+Ensure the child process inherits all shared structures from the parent.
+Store a pointer to the parent's page directory in the child process.
+
+3. Process Termination Modifications:
+Ensure both parent and child processes can terminate successfully and that all memory is freed.
+Be careful about which process can free which memory.
+User Programs:
+dalle:
+
+Prepares shared structures with various attributes related to text file analysis.
+Starts two child processes: coMMa and liSa.
+Waits for both child processes to finish before terminating.
+coMMa:
+
+Accepts user commands in a loop:
+latest: Displays the current sentence number and the longest and shortest words in that sentence.
+global extrema: Displays the longest and shortest words found globally.
+pause: Pauses text processing.
+resume: Resumes text processing.
+end: Signals liSa to terminate and then terminates itself.
+Commands global extrema and latest read directly from shared structures.
+Commands pause, resume, and end send signals to the liSa process using a shared command indicator.
+liSa:
+
+Processes the text file, finds the longest and shortest words in the current sentence, updates shared structures, increments the sentence counter, and calls sleep(150) to simulate data analysis.
+Checks for commands from coMMa after processing each sentence.
+Pauses on pause command and resumes on resume or terminates on end command.
+Outputs a completion message when done.
+This assignment involves making significant modifications to the xv6 system to support shared memory between processes, implementing new system calls, and creating user programs that demonstrate and utilize these changes.
